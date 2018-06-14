@@ -39,17 +39,32 @@ var EYES_COLORS = [
   'green'
 ];
 
+var FIREBALL_COLOR = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var NUMBER_OF_WIZARDS = 4;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var setupDialog = document.querySelector('.setup');
-setupDialog.classList.remove('hidden');
 var wizardTemplate = document.querySelector('#similar-wizard-template').content;
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var wizardCoat = setupDialog.querySelector('.setup-wizard .wizard-coat');
+var wizardEyes = setupDialog.querySelector('.setup-wizard .wizard-eyes');
+var wizardFireball = setupDialog.querySelector('.setup-fireball-wrap');
 
 var getRandomItem = function (list) {
   if (!list || !list.length) {
     return null;
   }
-  return list[Math.round(Math.random() * (list.length - 1))];
+  return list[Math.floor(Math.random() * list.length)];
 };
 
 var generateWizard = function () {
@@ -87,3 +102,61 @@ var renderWizardsList = function (wizards) {
 };
 
 renderWizardsList(generateWizardsList(NUMBER_OF_WIZARDS));
+
+
+var onPopupEscPress = function(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var openPopup = function() {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function() {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function() {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function() {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+
+wizardCoat.addEventListener('click', function() {
+  isChangeColor(wizardCoat, COAT_COLORS);
+});
+
+wizardEyes.addEventListener('click', function() {
+  isChangeColor(wizardEyes, EYES_COLORS);
+});
+
+wizardFireball.addEventListener('click', function() {
+  fireballChangeColor(wizardFireball, FIREBALL_COLOR);
+});
+
+var isChangeColor = function (el, arr) {
+  el.style.fill = arr[Math.floor(Math.random() * arr.length)];
+};
+
+var fireballChangeColor = function (el, arr) {
+  el.style.background = arr[Math.floor(Math.random() * arr.length)];
+};
