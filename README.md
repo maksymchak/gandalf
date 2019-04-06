@@ -4,7 +4,7 @@ and in a special window, adjust the appearance of the game character, buy artifa
 
 ![Gandalf](assets/readme_1.png)
 
-![Gandalf](assets/readme_2.png)
+....![Gandalf](assets/readme_2.png)
 
 
 
